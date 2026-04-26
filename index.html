@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Azienda San Grato · IIS Mendel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===========================
+       CONFIGURAZIONE IMMAGINI
+       Sostituisci gli URL con i
+       percorsi delle tue immagini
+       =========================== */
+
+    :root {
+      --verde-primario: #2e7d32;
+      --verde-scuro: #1b5e20;
+      --verde-chiaro: #4caf50;
+      --verde-mid: #388e3c;
+      --verde-pallido: #e8f5e9;
+      --verde-trasparente: rgba(27, 94, 32, 0.85);
+      --bianco: #ffffff;
+      --grigio-chiaro: #f5f5f5;
+      --grigio-medio: #eeeeee;
+      --testo-scuro: #1a1a1a;
+      --testo-medio: #424242;
+      --ombra-verde: rgba(46, 125, 50, 0.18);
+      --oro: #c9a84c;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--testo-scuro);
+      background: var(--bianco);
+      overflow-x: hidden;
+    }
+
+    /* ─── BARRA DI NAVIGAZIONE ─── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 70px;
+      background: transparent;
+      transition: background 0.4s, box-shadow 0.4s;
+    }
+    .nav.scrolled {
+      background: var(--verde-scuro);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--bianco);
+    }
+    .nav-logo-badge {
+      width: 40px; height: 40px;
+      background: var(--verde-chiaro);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--bianco);
+      flex-shrink: 0;
+    }
+    .nav-logo-text {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--bianco);
+    }
+    .nav-logo-text span {
+      display: block;
+      font-weight: 300;
+      font-size: 0.75rem;
+      opacity: 0.85;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--verde-chiaro); }
+    .nav-cta {
+      background: var(--verde-chiaro);
+      color: var(--bianco) !important;
+      padding: 0.45rem 1.2rem;
+      border-radius: 25px;
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--verde-primario) !important; transform: translateY(-1px); }
+
+    /* ─── HERO CON CAROSELLO ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-track {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      transition: none;
+    }
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transform: scale(1.05);
+      transition: opacity 1.2s ease-in-out, transform 8s ease-out;
+    }
+    .carousel-slide.active {
+      opacity: 1;
+      transform: scale(1.0);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.55) 0%,
+          rgba(0,0,0,0.30) 40%,
+          rgba(0,0,0,0.65) 100%
+        ),
+        linear-gradient(
+          150deg,
+          rgba(27, 94, 32, 0.72) 0%,
+          rgba(10, 40, 12, 0.55) 55%,
+          rgba(0,0,0,0.20) 100%
+        );
+      z-index: 2;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: var(--bianco);
+      padding: 2rem;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #69f57a;
+      margin-bottom: 1.2rem;
+      animation: fadeUp 1s 0.3s both;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--verde-chiaro);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+      animation: fadeUp 1s 0.5s both;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.7);
+    }
+    .hero-title em {
+      font-style: italic;
+      color: #7dff8a;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 30px rgba(0,200,50,0.4);
+    }
+    .hero-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 2rem;
+      animation: fadeUp 1s 0.7s both;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.85);
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.95);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      font-weight: 400;
+      animation: fadeUp 1s 0.9s both;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+    }
+    .hero-badges {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 1s 1.1s both;
+    }
+    .hero-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 30px;
+      padding: 0.55rem 1.3rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--bianco);
+    }
+    .hero-badge .icon { font-size: 1.1rem; }
+
+    /* Barra di avanzamento carosello */
+    .carousel-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255,255,255,0.15);
+      z-index: 4;
+    }
+    .carousel-progress-bar {
+      height: 100%;
+      background: var(--verde-chiaro);
+      width: 0%;
+      transition: width linear;
+    }
+    /* Contatore immagini */
+    .carousel-counter {
+      position: absolute;
+      bottom: 2rem;
+      right: 2.5rem;
+      z-index: 4;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.08em;
+      font-family: var(--font-body);
+    }
+    .carousel-counter .cur { color: var(--verde-chiaro); font-size: 1.1rem; }
+    /* Frecce navigazione */
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 4;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: var(--bianco);
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-arrow:hover { background: rgba(255,255,255,0.25); }
+    .carousel-arrow-prev { left: 1.5rem; }
+    .carousel-arrow-next { right: 1.5rem; }
+
+    /* Freccia scroll */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite 2s;
+    }
+    .scroll-hint::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ─── SEZIONI GENERALI ─── */
+    section { padding: 6rem 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--verde-primario);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--testo-scuro);
+      margin-bottom: 1.2rem;
+    }
+    .section-title em {
+      color: var(--verde-primario);
+      font-style: italic;
+    }
+    .section-lead {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: var(--testo-medio);
+      max-width: 680px;
+    }
+
+    /* ─── SEZIONE DESCRIZIONE ─── */
+    .about {
+      background: var(--bianco);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-text {}
+    .about-text p {
+      font-size: 1.02rem;
+      line-height: 1.85;
+      color: var(--testo-medio);
+      margin-bottom: 1.3rem;
+    }
+    .about-quote {
+      border-left: 4px solid var(--verde-chiaro);
+      padding: 1rem 1.5rem;
+      background: var(--verde-pallido);
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--verde-scuro);
+      line-height: 1.65;
+    }
+    .about-image-stack {
+      position: relative;
+      height: 500px;
+    }
+    .about-img-main {
+      position: absolute;
+      top: 0; right: 0;
+      width: 85%;
+      height: 360px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px var(--ombra-verde);
+    }
+    .about-img-accent {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 55%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 5px solid var(--bianco);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .about-img-badge {
+      position: absolute;
+      bottom: 100px; right: -1rem;
+      background: var(--verde-primario);
+      color: var(--bianco);
+      border-radius: 12px;
+      padding: 1rem 1.4rem;
+      text-align: center;
+      box-shadow: 0 8px 24px var(--ombra-verde);
+    }
+    .about-img-badge .num {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .about-img-badge .lbl {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    /* ─── STATS COUNTER ─── */
+    .stats {
+      background: var(--verde-scuro);
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .stats::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-card:last-child { border-right: none; }
+    .stat-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: var(--verde-chiaro);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    /* ─── PRODUZIONI ─── */
+    .produzioni { background: var(--grigio-chiaro); }
+    .produzioni-intro {
+      max-width: 700px;
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+    .produzioni-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+    }
+    .prod-card {
+      background: var(--bianco);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .prod-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px var(--ombra-verde);
+    }
+    .prod-card-header {
+      background: var(--verde-primario);
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .prod-card-icon {
+      font-size: 2.4rem;
+      background: rgba(255,255,255,0.15);
+      width: 60px; height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .prod-card-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--bianco);
+      line-height: 1.2;
+    }
+    .prod-card-subtitle {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.2rem;
+    }
+    .prod-card-body {
+      padding: 1.5rem;
+    }
+    .prod-card-body p {
+      font-size: 0.93rem;
+      line-height: 1.7;
+      color: var(--testo-medio);
+    }
+    .prod-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .prod-tag {
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--verde-primario);
+      background: var(--verde-pallido);
+      border-radius: 20px;
+      padding: 0.25rem 0.8rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── VIDEO ─── */
+    .video-section {
+      background: var(--bianco);
+      padding: 6rem 0;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .video-text {}
+    .video-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--testo-medio);
+      margin-bottom: 1.2rem;
+    }
+    .video-wrapper {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px var(--ombra-verde);
+      aspect-ratio: 16 / 9;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .video-caption {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      color: var(--testo-medio);
+    }
+    .video-caption::before {
+      content: '';
+      width: 20px; height: 20px;
+      background: var(--verde-chiaro);
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* ─── ATTIVITÀ PCTO ─── */
+    .attivita { background: var(--verde-scuro); color: var(--bianco); }
+    .attivita .section-title { color: var(--bianco); }
+    .attivita .section-title em { color: var(--verde-chiaro); }
+    .attivita .section-eyebrow { color: var(--verde-chiaro); }
+    .attivita .section-lead { color: rgba(255,255,255,0.75); }
+    .attivita-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem;
+    }
+    .attivita-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .attivita-item {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: background 0.3s;
+    }
+    .attivita-item:hover { background: rgba(255,255,255,0.1); }
+    .attivita-item-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .attivita-item-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--bianco);
+      margin-bottom: 0.4rem;
+    }
+    .attivita-item-desc {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.68);
+    }
+
+    /* ─── INNOVAZIONE 4.0 ─── */
+    .innovazione { background: var(--grigio-chiaro); }
+    .innovazione-intro { max-width: 680px; margin-bottom: 4rem; }
+    .inn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .inn-card {
+      background: var(--bianco);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      border-left: 4px solid var(--verde-chiaro);
+      transition: transform 0.3s;
+    }
+    .inn-card:hover { transform: translateX(4px); }
+    .inn-card-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      background: var(--verde-pallido);
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inn-card-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--verde-scuro);
+      margin-bottom: 0.5rem;
+    }
+    .inn-card-body p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--testo-medio);
+    }
+
+    /* ─── FONDAZIONE ─── */
+    .fondazione {
+      background: var(--bianco);
+      border-top: 1px solid var(--grigio-medio);
+      padding: 5rem 0;
+    }
+    .fondazione-inner {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+    }
+    .fondazione-badge {
+      flex-shrink: 0;
+      width: 110px; height: 110px;
+      background: linear-gradient(135deg, var(--verde-primario), var(--verde-scuro));
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--bianco);
+      text-align: center;
+      line-height: 1.3;
+      padding: 1rem;
+    }
+    .fondazione-badge .year {
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: block;
+    }
+    .fondazione-text h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--testo-scuro);
+      margin-bottom: 0.8rem;
+    }
+    .fondazione-text p {
+      font-size: 0.97rem;
+      line-height: 1.8;
+      color: var(--testo-medio);
+    }
+
+    /* ─── DOVE SIAMO ─── */
+    .dove { background: var(--verde-scuro); color: var(--bianco); padding: 5rem 0; }
+    .dove .section-title { color: var(--bianco); }
+    .dove .section-eyebrow { color: var(--verde-chiaro); }
+    .dove-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .dove-info {}
+    .dove-info p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 1.5rem;
+    }
+    .dove-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .dove-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .dove-detail-icon {
+      width: 42px; height: 42px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .dove-detail-text {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.78);
+    }
+    .dove-detail-text strong {
+      display: block;
+      color: var(--bianco);
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+      letter-spacing: 0.03em;
+    }
+    .dove-map {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.3);
+      height: 380px;
+      position: relative;
+    }
+    .dove-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .dove-map-label {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      background: var(--verde-primario);
+      color: var(--bianco);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ─── BOTTONE ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--verde-primario);
+      color: var(--bianco);
+    }
+    .btn-primary:hover {
+      background: var(--verde-scuro);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--ombra-verde);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--verde-primario);
+      border: 2px solid var(--verde-primario);
+    }
+    .btn-outline:hover {
+      background: var(--verde-primario);
+      color: var(--bianco);
+    }
+    .btn-white {
+      background: var(--bianco);
+      color: var(--verde-primario);
+    }
+    .btn-white:hover {
+      background: var(--verde-pallido);
+      transform: translateY(-2px);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #0d2b0f;
+      color: rgba(255,255,255,0.65);
+      padding: 3rem 0;
+      text-align: center;
+    }
+    footer .logo-footer {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--bianco);
+      margin-bottom: 0.5rem;
+    }
+    footer p { font-size: 0.82rem; line-height: 1.7; }
+    footer a { color: var(--verde-chiaro); text-decoration: none; }
+
+    /* ─── ANIMAZIONI SCROLL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .about-grid, .video-grid, .dove-grid, .attivita-header {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .produzioni-grid, .inn-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .attivita-list { grid-template-columns: 1fr; }
+      .about-image-stack { height: 300px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===========================
+     CONFIGURAZIONE IMMAGINI
+     Inserisci qui i percorsi
+     delle tue 20+ immagini
+     =========================== -->
+<script>
+  // ↓ MODIFICA QUESTO ARRAY con i percorsi delle tue 50 immagini ↓
+  // Metti i file in una cartella "images/" accanto all'HTML
+  const IMMAGINI = [
+    'images/azienda-01.jpg',
+    'images/azienda-02.jpg',
+    'images/azienda-03.jpg',
+    'images/azienda-04.jpg',
+    'images/azienda-05.jpg',
+    'images/azienda-06.jpg',
+    'images/azienda-07.jpg',
+    'images/azienda-08.jpg',
+    'images/azienda-09.jpg',
+    'images/azienda-10.jpg',
+    'images/azienda-11.jpg',
+    'images/azienda-12.jpg',
+    'images/azienda-13.jpg',
+    'images/azienda-14.jpg',
+    'images/azienda-15.jpg',
+    'images/azienda-16.jpg',
+    'images/azienda-17.jpg',
+    'images/azienda-18.jpg',
+    'images/azienda-19.jpg',
+    'images/azienda-20.jpg',
+    'images/azienda-21.jpg',
+    'images/azienda-22.jpg',
+    'images/azienda-23.jpg',
+    'images/azienda-24.jpg',
+    'images/azienda-25.jpg',
+    'images/azienda-26.jpg',
+    'images/azienda-27.jpg',
+    'images/azienda-28.jpg',
+    'images/azienda-29.jpg',
+    'images/azienda-30.jpg',
+    'images/azienda-31.jpg',
+    'images/azienda-32.jpg',
+    'images/azienda-33.jpg',
+    'images/azienda-34.jpg',
+    'images/azienda-35.jpg',
+    'images/azienda-36.jpg',
+    'images/azienda-37.jpg',
+    'images/azienda-38.jpg',
+    'images/azienda-39.jpg',
+    'images/azienda-40.jpg',
+    'images/azienda-41.jpg',
+    'images/azienda-42.jpg',
+    'images/azienda-43.jpg',
+    'images/azienda-44.jpg',
+    'images/azienda-45.jpg',
+    'images/azienda-46.jpg',
+    'images/azienda-47.jpg',
+    'images/azienda-48.jpg',
+    'images/azienda-49.jpg',
+    'images/azienda-50.jpg',
+    'images/azienda-51.jpg',
+    'images/azienda-52.jpg',
+    'images/azienda-53.jpg',
+    'images/azienda-54.jpg',
+    'images/azienda-55.jpg',
+    'images/azienda-56.jpg',
+    'images/azienda-57.jpg',
+    'images/azienda-58.jpg',
+    'images/azienda-59.jpg',
+    'images/azienda-60.jpg',
+  ];
+</script>
+
+<!-- NAVIGAZIONE -->
+<nav class="nav" id="mainNav">
+  <a href="https://agrariomendel.edu.it" class="nav-logo">
+    <div class="nav-logo-badge">M</div>
+    <div class="nav-logo-text">
+      IIS Mendel
+      <span>Istituto Tecnico Agrario</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">L'Azienda</a></li>
+    <li><a href="#produzioni">Produzioni</a></li>
+    <li><a href="#video">Video</a></li>
+    <li><a href="#attivita">Attività</a></li>
+    <li><a href="#innovazione">Innovazione</a></li>
+    <li><a href="#dove" class="nav-cta">📍 Dove siamo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO CON CAROSELLO -->
+<section class="hero" id="hero">
+  <div class="carousel-track" id="carouselTrack">
+    <!-- Le slide vengono generate da JS -->
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">IIS Mendel · Villa Cortese</div>
+    <h1 class="hero-title">Azienda<br><em>San Grato</em></h1>
+    <p class="hero-subtitle">Il laboratorio a cielo aperto dell'agricoltura del futuro</p>
+    <p class="hero-desc">
+      250 ettari di terreno, tradizione centenaria e tecnologie di ultima generazione:
+      dove gli studenti del Mendel mettono le mani in pasta — anzi, nella terra.
+    </p>
+    <div class="hero-badges">
+      <div class="hero-badge"><span class="icon">🌾</span> 250 ha di superficie</div>
+      <div class="hero-badge"><span class="icon">🍇</span> 6 indirizzi produttivi</div>
+      <div class="hero-badge"><span class="icon">🎓</span> Laboratorio PCTO</div>
+      <div class="hero-badge"><span class="icon">🤖</span> Agricoltura 4.0</div>
+    </div>
+  </div>
+
+  <div class="carousel-progress">
+    <div class="carousel-progress-bar" id="carouselBar"></div>
+  </div>
+  <div class="carousel-counter" id="carouselCounter">
+    <span class="cur" id="carouselCur">1</span> / <span id="carouselTotal">60</span>
+  </div>
+  <button class="carousel-arrow carousel-arrow-prev" id="arrowPrev" aria-label="Precedente">‹</button>
+  <button class="carousel-arrow carousel-arrow-next" id="arrowNext" aria-label="Successiva">›</button>
+  <div class="scroll-hint">Scorri</div>
+</section>
+
+<!-- DESCRIZIONE -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="section-eyebrow">La nostra azienda</p>
+        <h2 class="section-title">Un patrimonio <em>vivo</em><br>nel cuore della pianura</h2>
+
+        <p>
+          L'<strong>Azienda San Grato</strong> è il cuore pulsante dell'offerta formativa dell'IIS Mendel:
+          un'azienda agricola a indirizzo multifunzionale che si estende su circa <strong>250 ettari</strong>
+          nei pressi di Villa Cortese, a pochi minuti a piedi dalla scuola. Non è un semplice campo
+          didattico — è un laboratorio reale, produttivo, dove il ciclo agricolo si compie in tutte
+          le sue fasi, stagione dopo stagione.
+        </p>
+
+        <div class="about-quote">
+          «Dar modo ai giovani studiosi di agricoltura di attuare e sperimentare
+          nella pratica dei campi gli insegnamenti della scienza.»
+          <br><small>— Francesco Ferrazzi, fondatore</small>
+        </div>
+
+        <p>
+          Gestita in stretta collaborazione con la <strong>Fondazione Ferrazzi-Cova</strong> — che
+          sostiene la missione educativa del Mendel fin dal 1935 — l'azienda abbraccia
+          settori produttivi diversificati: dalla frutticoltura alla viticoltura, dall'orticoltura
+          alla cerealicoltura, dall'allevamento alla produzione energetica. Recentemente
+          sono state allestite una <strong>serra fungaia</strong> e <strong>due nuove serre orticole</strong>,
+          e il sito ospita un <strong>apiario</strong> attivo, meta di visite e progetti didattici.
+        </p>
+
+        <p>
+          Qui gli studenti non sono semplici spettatori: semina, raccolta, confezionamento,
+          vendita diretta in filiera corta — ogni attività è reale, ogni errore insegna,
+          ogni raccolto è motivo di orgoglio condiviso.
+        </p>
+
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;">
+          <a href="#video" class="btn btn-primary">▶ Guarda il video</a>
+          <a href="#dove" class="btn btn-outline">📍 Come raggiungerci</a>
+        </div>
+      </div>
+
+      <div class="about-image-stack reveal reveal-delay-2">
+        <img class="about-img-main"
+          src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=900&q=85"
+          alt="Campi azienda San Grato">
+        <img class="about-img-accent"
+          src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=85"
+          alt="Studenti in azienda">
+        <div class="about-img-badge">
+          <div class="num">250</div>
+          <div class="lbl">ettari<br>produttivi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATISTICHE -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <span class="stat-icon">🌾</span>
+        <div class="stat-number" data-target="250">0</div>
+        <div class="stat-label">ettari di superficie aziendale</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-1">
+        <span class="stat-icon">🏭</span>
+        <div class="stat-number" data-target="6">0</div>
+        <div class="stat-label">indirizzi produttivi attivi</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <span class="stat-icon">🌿</span>
+        <div class="stat-number" data-target="5">0</div>
+        <div class="stat-label">strutture tra serre e laboratori</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-3">
+        <span class="stat-icon">🎓</span>
+        <div class="stat-number" data-target="200">0</div>
+        <div class="stat-label">studenti in attività PCTO ogni anno</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUZIONI -->
+<section class="produzioni" id="produzioni">
+  <div class="container">
+    <div class="produzioni-intro reveal" style="text-align:center;margin:0 auto 4rem;">
+      <p class="section-eyebrow">Cosa produciamo</p>
+      <h2 class="section-title">Un'azienda<br><em>multifunzionale</em></h2>
+      <p class="section-lead" style="margin:0 auto;text-align:center;">
+        Sei grandi filiere produttive convivono e dialogano in un sistema agricolo integrato
+        che rispecchia la complessità dell'agricoltura moderna.
+      </p>
+    </div>
+
+    <div class="produzioni-grid">
+      <div class="prod-card reveal">
+        <div class="prod-card-header" style="background:var(--verde-scuro);">
+          <div class="prod-card-icon">🍎</div>
+          <div>
+            <div class="prod-card-title">Frutticoltura</div>
+            <div class="prod-card-subtitle">Varietà locali e sperimentali</div>
+          </div>
+        </div>
+        <div class="prod-card-body">
+          <p>Il frutteto aziendale, recentemente riqualificato con reintroduzione di varietà locali,
+          è uno dei settori più attivi per le esercitazioni pratiche. Gli studenti seguono
+          l'intera stagione produttiva: dalla potatura invernale alla raccolta estivo-autunnale.</p>
+          <div class="prod-tags">
+            <span class="prod-tag">Potatura</span>
+            <span class="prod-tag">Raccolta</span>
+            <span class="prod-tag">Varietà locali</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal reveal-delay-1">
+        <div class="prod-card-header" style="background:#5d4037;">
+          <div class="prod-card-icon">🍇</div>
+          <div>
+            <div class="prod-card-title">Viticoltura & Vino</div>
+            <div class="prod-card-subtitle">Dalla vigna al calice</div>
+          </div>
+        </div>
+        <div class="prod-card-body">
+          <p>La vocazione vitivinicola dell'azienda rappresenta un ponte tra tradizione rurale
+          lombarda e innovazione enologica. Gli studenti apprendono le tecniche di vinificazione
+          nel laboratorio di trasformazione, dal pigiaggio all'imbottigliamento.</p>
+          <div class="prod-tags">
+            <span class="prod-tag">Vendemmia</span>
+            <span class="prod-tag">Vinificazione</span>
+            <span class="prod-tag">Degustazione</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal reveal-delay-2">
+        <div class="prod-card-header" style="background:#388e3c;">
+          <div class="prod-card-icon">🥬</div>
+          <div>
+            <div class="prod-card-title">Orticoltura</div>
+            <div class="prod-card-subtitle">Filiera corta e vendita diretta</div>
+          </div>
+        </div>
+        <div class="prod-card-body">
+          <p>Le serre orticole sono il regno dei prodotti di qualità a km zero. Gli studenti
+          seguono l'intero ciclo: semina, trapianto, gestione del suolo, concimazione,
+          raccolta e confezionamento per la vendita diretta al pubblico.</p>
+          <div class="prod-tags">
+            <span class="prod-tag">Semina</span>
+            <span class="prod-tag">Km zero</span>
+            <span class="prod-tag">Vendita diretta</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal">
+        <div class="prod-card-header" style="background:#f57f17;">
+          <div class="prod-card-icon">🌾</div>
+          <div>
+            <div class="prod-card-title">Cerealicoltura & Foraggi</div>
+            <div class="prod-card-subtitle">Produzioni estensive</div>
+          </div>
+        </div>
+        <div class="prod-card-body">
+          <p>Grandi superfici dedicate a cereali e colture foraggere a supporto dell'indirizzo
+          zootecnico e della bioeconomia aziendale. Un contesto ideale per apprendere
+          la gestione agronomica e le tecniche di precision farming.</p>
+          <div class="prod-tags">
+            <span class="prod-tag">GPS agri.</span>
+            <span class="prod-tag">Sensoristica</span>
+            <span class="prod-tag">Precision farming</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal reveal-delay-1">
+        <div class="prod-card-header" style="background:#1565c0;">
+          <div class="prod-card-icon">🐄</div>
+          <div>
+            <div class="prod-card-title">Zootecnia</div>
+            <div class="prod-card-subtitle">Allevamento e trasformazione</div>
+          </div>
+        </div>
+        <div class="prod-card-body">
+          <p>L'indirizzo zootecnico integra la gestione degli animali con la trasformazione
+          dei prodotti: il mini-caseificio didattico del nuovo Laboratorio di Trasformazione
+          Prodotti consente di produrre formaggi freschi e stagionati secondo le normative vigenti.</p>
+          <div class="prod-tags">
+            <span class="prod-tag">Caseificio</span>
+            <span class="prod-tag">HACCP</span>
+            <span class="prod-tag">Tracciabilità</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal reveal-delay-2">
+        <div class="prod-card-header" style="background:#00695c;">
+          <div class="prod-card-icon">🍄</div>
+          <div>
+            <div class="prod-card-title">Apicoltura & Funghi</div>
+            <div class="prod-card-subtitle">Biodiversità e nicchie produttive</div>
+          </div>
+        </div>
+        <div class="prod-card-body">
+          <p>L'<strong>apiario</strong> aziendale è protagonista del Progetto Apimania, che porta
+          oltre 25 studenti all'anno a scoprire le tecniche di allevamento delle api e la
+          produzione del miele. La nuova <strong>serra fungaia</strong> aggiunge un ulteriore tassello
+          alla diversificazione produttiva.</p>
+          <div class="prod-tags">
+            <span class="prod-tag">Apicoltura</span>
+            <span class="prod-tag">Miele</span>
+            <span class="prod-tag">Fungicultura</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section" id="video">
+  <div class="container">
+    <div class="video-grid">
+      <div class="video-text reveal">
+        <p class="section-eyebrow">Guarda l'azienda</p>
+        <h2 class="section-title">L'azienda<br><em>in azione</em></h2>
+        <p>
+          In questo video scopri l'Azienda San Grato nella sua quotidianità produttiva:
+          le macchine agricole di ultima generazione, i nuovi macchinari acquistati
+          grazie ai finanziamenti PNRR e PON, e una sequenza che racconta
+          il ritmo vivo dei campi e delle strutture aziendali.
+        </p>
+        <p>
+          Non semplici riprese — uno sguardo autentico su quello che
+          gli studenti del Mendel incontrano ogni giorno durante le loro
+          esercitazioni pratiche e i percorsi PCTO: trattori, serre, orti,
+          vigneti e laboratori tutti a pochi passi dalle aule.
+        </p>
+        <p>
+          La trattrice che compare nel video è uno dei nuovi macchinari
+          acquisiti nell'ambito del progetto <strong>Mendel 4.0</strong>, che integra
+          soluzioni di agricoltura di precisione con sistemi di rilevamento GPS
+          e sensori ambientali per la gestione sostenibile delle risorse.
+        </p>
+        <a href="https://www.youtube.com/watch?v=B5V3d8kBkqA" target="_blank"
+          class="btn btn-primary" style="margin-top:1rem;">
+          ▶ Apri su YouTube
+        </a>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/B5V3d8kBkqA?rel=0&modestbranding=1&color=white"
+            title="Azienda San Grato - IIS Mendel"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-caption">
+          Azienda San Grato · Via San Grato 36/B, Villa Cortese (MI) · IIS Gregorio Mendel
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATTIVITÀ PCTO -->
+<section class="attivita" id="attivita">
+  <div class="container">
+    <div class="attivita-header">
+      <div class="reveal">
+        <p class="section-eyebrow">Formazione sul campo</p>
+        <h2 class="section-title">Cosa fanno<br>gli <em>studenti</em></h2>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p class="section-lead">
+          L'Azienda San Grato è il luogo principale per i Percorsi per le Competenze
+          Trasversali e l'Orientamento (PCTO). Ogni studente del triennio vi trascorre
+          centinaia di ore di formazione reale, seguito da tutor aziendali e scolastici.
+        </p>
+      </div>
+    </div>
+
+    <div class="attivita-list">
+      <div class="attivita-item reveal">
+        <div class="attivita-item-icon">🌱</div>
+        <div>
+          <div class="attivita-item-title">Semina & Taleaggio</div>
+          <div class="attivita-item-desc">Riproduzione vegetativa e gamica delle piante orticole, arboree e ornamentali. Dalla scelta del seme alla gestione del semenzaio.</div>
+        </div>
+      </div>
+      <div class="attivita-item reveal reveal-delay-1">
+        <div class="attivita-item-icon">🚜</div>
+        <div>
+          <div class="attivita-item-title">Gestione del suolo</div>
+          <div class="attivita-item-desc">Lavorazioni, concimazione, irrigazione e controllo fitosanitario con uso di macchinari agricoli moderni, inclusi sistemi GPS.</div>
+        </div>
+      </div>
+      <div class="attivita-item reveal reveal-delay-2">
+        <div class="attivita-item-icon">🌿</div>
+        <div>
+          <div class="attivita-item-title">Piantumazione & Cura</div>
+          <div class="attivita-item-desc">Trapianto, tutoraggio, monitoraggio dello sviluppo vegetale, potatura verde e gestione delle serre con sistemi automatizzati.</div>
+        </div>
+      </div>
+      <div class="attivita-item reveal reveal-delay-3">
+        <div class="attivita-item-icon">🧺</div>
+        <div>
+          <div class="attivita-item-title">Raccolta & Confezionamento</div>
+          <div class="attivita-item-desc">Raccolta manuale e meccanizzata, selezione qualitativa, confezionamento sostenibile e preparazione per la vendita diretta.</div>
+        </div>
+      </div>
+      <div class="attivita-item reveal">
+        <div class="attivita-item-icon">🏪</div>
+        <div>
+          <div class="attivita-item-title">Vendita diretta – filiera corta</div>
+          <div class="attivita-item-desc">Organizzazione di punti vendita aziendali e mercatini: gli studenti gestiscono l'intero processo dalla produzione alla vendita al consumatore finale.</div>
+        </div>
+      </div>
+      <div class="attivita-item reveal reveal-delay-1">
+        <div class="attivita-item-icon">🔬</div>
+        <div>
+          <div class="attivita-item-title">Analisi & Trasformazione</div>
+          <div class="attivita-item-desc">Attività nel laboratorio di Trasformazione Prodotti: produzioni casearie, conservazione di IV e V gamma, etichettatura e tracciabilità degli alimenti.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INNOVAZIONE 4.0 -->
+<section class="innovazione" id="innovazione">
+  <div class="container">
+    <div class="innovazione-intro reveal">
+      <p class="section-eyebrow">Mendel 4.0</p>
+      <h2 class="section-title">Agricoltura del<br><em>futuro</em>, oggi</h2>
+      <p class="section-lead">
+        Dal 2021 l'Istituto ha investito in tecnologie di agricoltura 4.0, trasformando
+        l'azienda in un laboratorio di innovazione applicata al mondo reale.
+      </p>
+    </div>
+
+    <div class="inn-grid">
+      <div class="inn-card reveal">
+        <div class="inn-card-icon">🛸</div>
+        <div class="inn-card-body">
+          <h3>Droni Tecnici</h3>
+          <p>Droni per il rilevamento topografico e la progettazione di aree verdi.
+          Gli studenti imparano a pianificare interventi agronomici tramite fotogrammetria aerea e mappatura NDVI.</p>
+        </div>
+      </div>
+      <div class="inn-card reveal reveal-delay-1">
+        <div class="inn-card-icon">📡</div>
+        <div class="inn-card-body">
+          <h3>Sensoristica & Telemetria</h3>
+          <p>Sensori di umidità e temperatura del suolo, stazioni climatiche connesse,
+          elaborazione in tempo reale di dati pedologici e ambientali tramite piattaforme cloud.</p>
+        </div>
+      </div>
+      <div class="inn-card reveal reveal-delay-2">
+        <div class="inn-card-icon">🌊</div>
+        <div class="inn-card-body">
+          <h3>Colture Idroponiche & Aeroponiche</h3>
+          <p>Impianto operativo dal 2022-23 per la coltivazione senza suolo. Un sistema
+          gestito automaticamente che permette di comparare rese e qualità con le colture tradizionali.</p>
+        </div>
+      </div>
+      <div class="inn-card reveal reveal-delay-3">
+        <div class="inn-card-icon">🤖</div>
+        <div class="inn-card-body">
+          <h3>Trappole AI per Fitofagi</h3>
+          <p>Trappole digitali per insetti con sistema di riconoscimento ad intelligenza artificiale:
+          monitoraggio fitosanitario automatizzato con alert in tempo reale per una difesa integrata.</p>
+        </div>
+      </div>
+      <div class="inn-card reveal">
+        <div class="inn-card-icon">🧀</div>
+        <div class="inn-card-body">
+          <h3>Mini-Caseificio Didattico</h3>
+          <p>Laboratorio di Trasformazione e Conservazione Prodotti operativo dal 2023-24,
+          con mini-caseificio, impianto di compostaggio e sensoristica digitalizzata per il controllo di processo.</p>
+        </div>
+      </div>
+      <div class="inn-card reveal reveal-delay-1">
+        <div class="inn-card-icon">🗺️</div>
+        <div class="inn-card-body">
+          <h3>GPS & Topografia Robotizzata</h3>
+          <p>Sistemi di rilevamento topografico robotizzati per la mappatura e la gestione
+          del territorio. Analisi dei dati integrata con GIS per la progettazione agronomica di precisione.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FONDAZIONE -->
+<section class="fondazione">
+  <div class="container">
+    <div class="fondazione-inner reveal">
+      <div class="fondazione-badge">
+        <span class="year">1933</span>
+        Fondazione<br>Ferrazzi-Cova
+      </div>
+      <div class="fondazione-text">
+        <h3>Una storia che radica nel territorio</h3>
+        <p>
+          L'Azienda San Grato è gestita in collaborazione con la <strong>Fondazione Scuola di Agricoltura
+          Ferrazzi e Cova</strong>, istituita per volontà di <strong>Francesco Ferrazzi</strong> (1849-1933),
+          pioniere dell'innovazione agraria nel Legnanese. La Fondazione — che prende il nome
+          anche dalla moglie Luigia Cova — ha il mandato statutario di promuovere
+          l'insegnamento tecnico-pratico in campo agricolo, missione che continua ininterrottamente
+          da oltre 90 anni in stretta sinergia con il Mendel. Una collaborazione che guarda
+          all'innovazione senza mai dimenticare le radici della tradizione rurale locale.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOVE SIAMO -->
+<section class="dove" id="dove">
+  <div class="container">
+    <div class="dove-grid">
+      <div class="dove-info reveal">
+        <p class="section-eyebrow">Come raggiungerci</p>
+        <h2 class="section-title" style="font-size:2.2rem;">Dove si trova<br>l'azienda</h2>
+
+        <p>
+          L'Azienda San Grato è situata a pochi passi dall'IIS Mendel:
+          raggiungibile comodamente a piedi in pochi minuti dalla sede scolastica.
+          Una posizione ideale per garantire la massima continuità tra lezione teorica
+          e pratica in campo.
+        </p>
+
+        <div class="dove-details">
+          <div class="dove-detail">
+            <div class="dove-detail-icon">📍</div>
+            <div class="dove-detail-text">
+              <strong>Indirizzo</strong>
+              Via San Grato 36/B, 20035 Villa Cortese (MI)
+            </div>
+          </div>
+          <div class="dove-detail">
+            <div class="dove-detail-icon">🏫</div>
+            <div class="dove-detail-text">
+              <strong>Distanza dalla scuola</strong>
+              Poche centinaia di metri · raggiungibile a piedi in 3-5 minuti
+            </div>
+          </div>
+          <div class="dove-detail">
+            <div class="dove-detail-icon">🚌</div>
+            <div class="dove-detail-text">
+              <strong>Trasporti pubblici</strong>
+              Stazione Legnano (Trenord S5/S6) + Movibus Z643/Z644 fino a Villa Cortese
+            </div>
+          </div>
+          <div class="dove-detail">
+            <div class="dove-detail-icon">📞</div>
+            <div class="dove-detail-text">
+              <strong>Contatti scuola</strong>
+              Tel. 0331-434311 · <a href="mailto:miis08300x@istruzione.it" style="color:var(--verde-chiaro);">miis08300x@istruzione.it</a>
+            </div>
+          </div>
+        </div>
+
+        <a href="https://agrariomendel.edu.it" target="_blank"
+          class="btn btn-white" style="margin-top:2rem;">
+          🌐 Visita il sito dell'Istituto
+        </a>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="dove-map">
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=8.888%2C45.570%2C8.914%2C45.582&layer=mapnik&marker=45.5757%2C8.9013"
+            title="Mappa Azienda San Grato"
+            loading="lazy">
+          </iframe>
+          <div class="dove-map-label">📍 Azienda San Grato · Villa Cortese</div>
+        </div>
+        <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:0.6rem;text-align:right;">
+          © OpenStreetMap contributors
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="logo-footer">IIS Gregorio Mendel</div>
+    <p>
+      Via Ferrazzi 15 · 20035 Villa Cortese (MI)<br>
+      Tel. <a href="tel:033143431">0331-434311</a> ·
+      <a href="https://agrariomendel.edu.it">agrariomendel.edu.it</a> ·
+      Cod. meccanografico MIIS08300X
+    </p>
+    <p style="margin-top:1rem;font-size:0.75rem;opacity:0.5;">
+      © IIS Mendel · Pagina realizzata a scopo informativo e didattico
+    </p>
+  </div>
+</footer>
+
+<script>
+  // ─── CAROSELLO ───
+  (function() {
+    const track     = document.getElementById('carouselTrack');
+    const bar       = document.getElementById('carouselBar');
+    const curEl     = document.getElementById('carouselCur');
+    const totalEl   = document.getElementById('carouselTotal');
+    const arrowPrev = document.getElementById('arrowPrev');
+    const arrowNext = document.getElementById('arrowNext');
+
+    if (!IMMAGINI || IMMAGINI.length === 0) return;
+
+    const INTERVAL = 5000; // ms per slide
+    let current = 0;
+    const slides = [];
+    let timer, barTimer;
+
+    totalEl.textContent = IMMAGINI.length;
+
+    IMMAGINI.forEach((src, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'carousel-slide' + (i === 0 ? ' active' : '');
+      slide.style.backgroundImage = `url('${src}')`;
+      track.appendChild(slide);
+      slides.push(slide);
+    });
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      current = (idx + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      curEl.textContent = current + 1;
+      restartBar();
+    }
+
+    function restartBar() {
+      // Resetta e riavvia la barra
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          bar.style.transition = `width ${INTERVAL}ms linear`;
+          bar.style.width = '100%';
+        });
+      });
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function startTimer() {
+      clearInterval(timer);
+      timer = setInterval(next, INTERVAL);
+    }
+
+    arrowNext.addEventListener('click', () => { next(); startTimer(); });
+    arrowPrev.addEventListener('click', () => { prev(); startTimer(); });
+
+    // Pausa su hover
+    const hero = document.getElementById('hero');
+    hero.addEventListener('mouseenter', () => {
+      clearInterval(timer);
+      bar.style.animationPlayState = 'paused';
+    });
+    hero.addEventListener('mouseleave', () => {
+      startTimer();
+      bar.style.animationPlayState = 'running';
+    });
+
+    // Swipe touch
+    let touchStartX = 0;
+    hero.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    hero.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) { diff > 0 ? next() : prev(); startTimer(); }
+    });
+
+    // Avvia
+    restartBar();
+    startTimer();
+  })();
+
+  // ─── NAVBAR SCROLL ───
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ─── COUNTER ANIMATION ───
+  function animateCounter(el, target, duration) {
+    let start = 0;
+    const step = target / (duration / 16);
+    const interval = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        el.textContent = target + (target === 250 || target === 200 ? '' : '');
+        clearInterval(interval);
+      } else {
+        el.textContent = Math.floor(start);
+      }
+    }, 16);
+  }
+
+  // ─── SCROLL REVEAL ───
+  const revealEls = document.querySelectorAll('.reveal');
+  const counterEls = document.querySelectorAll('[data-target]');
+  const countersStarted = new Set();
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !countersStarted.has(entry.target)) {
+        countersStarted.add(entry.target);
+        const target = parseInt(entry.target.dataset.target);
+        animateCounter(entry.target, target, 1800);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counterEls.forEach(el => counterObserver.observe(el));
+</script>
+</body>
+</html>
