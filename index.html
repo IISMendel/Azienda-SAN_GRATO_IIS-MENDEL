@@ -66,16 +66,13 @@
       text-decoration: none;
       color: var(--bianco);
     }
-    .nav-logo-badge {
-      width: 40px; height: 40px;
-      background: var(--verde-chiaro);
+    /* Nuovo stile per l'immagine del logo */
+    .nav-logo-image {
+      width: 44px; height: 44px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--bianco);
+      object-fit: cover;
       flex-shrink: 0;
+      background: var(--bianco);
     }
     .nav-logo-text {
       font-family: var(--font-body);
@@ -1009,7 +1006,7 @@
 <!-- NAVIGAZIONE -->
 <nav class="nav" id="mainNav">
   <a href="https://agrariomendel.edu.it" class="nav-logo">
-    <div class="nav-logo-badge">M</div>
+    <img src="Logodefdef_upscayl_3x_realesrgan-x4plus.jpg" alt="Logo IIS Mendel" class="nav-logo-image">
     <div class="nav-logo-text">
       IIS Mendel
       <span>Istituto Tecnico Agrario</span>
@@ -1250,7 +1247,7 @@
         <div class="prod-card-body">
           <p>L'indirizzo zootecnico integra la gestione degli animali con la trasformazione
           dei prodotti: il mini-caseificio didattico del nuovo Laboratorio di Trasformazione
-          Prodotti consente di produce formaggi freschi e stagionati secondo le normative vigenti.</p>
+          Prodotti consente di produrre formaggi freschi e stagionati secondo le normative vigenti.</p>
           <div class="prod-tags">
             <span class="prod-tag">Caseificio</span>
             <span class="prod-tag">HACCP</span>
@@ -1322,7 +1319,6 @@
         <!-- IMMAGINE CLICCABILE CON EFFETTO HOVER -->
         <a href="https://iismendel.github.io/Azienda_IIS-MENDEL/" target="_blank" style="display: block; text-decoration: none; position: relative;" class="interactive-video-link">
           <div class="video-wrapper" style="box-shadow: 0 15px 40px rgba(211, 47, 47, 0.2); border: 2px solid #d32f2f;">
-            <!-- MODIFICA IL NOME QUI SE CAMBI NOME AL FILE -->
             <img src="anteprima-video.png" alt="Anteprima Video Azienda Interattivo" style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; inset: 0;">
             
             <!-- Overlay centrale finto play -->
@@ -1714,5 +1710,3 @@
 </script>
 </body>
 </html>
-```<ElicitationsGroup>
-</ElicitationsGroup>
