@@ -606,6 +606,15 @@
       display: inline-block;
       flex-shrink: 0;
     }
+    
+    /* Effetto hover per l'immagine cliccabile del video */
+    .interactive-video-link:hover .video-play-overlay {
+      background: rgba(0, 0, 0, 0.05) !important;
+    }
+    .interactive-video-link:hover .video-play-button {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(211, 47, 47, 0.6) !important;
+    }
 
     /* ─── ATTIVITÀ FSL ─── */
     .attivita { background: var(--verde-scuro); color: var(--bianco); }
@@ -861,6 +870,21 @@
     .btn-white:hover {
       background: var(--verde-pallido);
       transform: translateY(-2px);
+    }
+    
+    /* ─── NUOVO STILE PULSANTE ROSSO ─── */
+    .btn-red {
+      background: #d32f2f;
+      color: var(--bianco);
+      border: 2px solid #d32f2f;
+      box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+    }
+    .btn-red:hover {
+      background: #b71c1c;
+      border-color: #b71c1c;
+      color: var(--bianco);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(211, 47, 47, 0.4);
     }
 
     /* ─── FOOTER ─── */
@@ -1264,10 +1288,10 @@
   <div class="container">
     <div class="video-grid">
       <div class="video-text reveal">
-        <p class="section-eyebrow">Guarda l'azienda</p>
-        <h2 class="section-title">L'azienda<br><em>in azione</em></h2>
+        <p class="section-eyebrow">Esplora l'azienda</p>
+        <h2 class="section-title">L'azienda<br><em>interattiva</em></h2>
         <p>
-          In questo video scopri l'Azienda San Grato nella sua quotidianità produttiva:
+          In questo tour interattivo scopri l'Azienda San Grato nella sua quotidianità produttiva:
           le macchine agricole di ultima generazione, i nuovi macchinari acquistati
           grazie ai finanziamenti PNRR e PON, e una sequenza che racconta
           il ritmo vivo dei campi e delle strutture aziendali.
@@ -1284,24 +1308,35 @@
           soluzioni di agricoltura di precisione con sistemi di rilevamento GPS
           e sensori ambientali per la gestione sostenibile delle risorse.
         </p>
-        <a href="https://youtu.be/lNcxCURgMAk?si=eQkz33gCLtVcSaey"
-          class="btn btn-primary" style="margin-top:1rem;">
-          ▶ Apri su YouTube
-        </a>
       </div>
 
       <div class="reveal reveal-delay-2">
-        <div class="video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/lNcxCURgMAk?si=eQkz33gCLtVcSaey"
-            title="Azienda San Grato - IIS Mendel"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
+      
+        <!-- PULSANTE IN EVIDENZA -->
+        <div style="margin-bottom: 1.5rem; text-align: center;">
+          <a href="https://iismendel.github.io/Azienda_IIS-MENDEL/" target="_blank" class="btn btn-red" style="width: 100%; justify-content: center; font-size: 1.1rem; padding: 1rem 0;">
+            🎥 Avvia il Video Azienda Interattivo
+          </a>
         </div>
-        <div class="video-caption">
-          Azienda San Grato · Via San Grato 36/B, Villa Cortese (MI) · IIS Gregorio Mendel
+        
+        <!-- IMMAGINE CLICCABILE CON EFFETTO HOVER -->
+        <a href="https://iismendel.github.io/Azienda_IIS-MENDEL/" target="_blank" style="display: block; text-decoration: none; position: relative;" class="interactive-video-link">
+          <div class="video-wrapper" style="box-shadow: 0 15px 40px rgba(211, 47, 47, 0.2); border: 2px solid #d32f2f;">
+            <img src="Immagine 2026-10-23 185704.png" alt="Anteprima Video Azienda Interattivo" style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; inset: 0;">
+            
+            <!-- Overlay centrale finto play -->
+            <div class="video-play-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; transition: background 0.3s;">
+              <div class="video-play-button" style="width: 80px; height: 80px; background: #d32f2f; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.4); padding-left: 5px; transition: transform 0.3s, box-shadow 0.3s;">
+                ▶
+              </div>
+            </div>
+            
+          </div>
+        </a>
+        <div class="video-caption" style="margin-top: 1rem;">
+          Clicca sull'immagine o sul pulsante per avviare il tour interattivo dell'Azienda San Grato
         </div>
+        
       </div>
     </div>
   </div>
